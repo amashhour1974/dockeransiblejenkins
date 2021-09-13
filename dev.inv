@@ -1,2 +1,2 @@
 [dev]
-20.103.160.155 ansible_user=ansibleuser ansible_python_interpreter=/usr/bin/python2
+20.103.160.155 ansible_user=ansibleuser
