@@ -3,7 +3,7 @@
   become: True
   tasks:pyth
     - name: Install docker
-      apt:
+      yum:
         name: docker
         state: present
     - name: start docker
