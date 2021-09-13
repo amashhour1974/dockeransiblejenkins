@@ -7,7 +7,7 @@
         name: python-pip
         state: present
       vars:
-        ansible_python_interpreter: /usr/bin/python2
+        ansible_python_interpreter: /usr/bin/python
     - name: Install docker
       yum:
         name: docker
