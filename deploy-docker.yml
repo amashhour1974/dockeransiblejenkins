@@ -2,12 +2,12 @@
 - hosts: dev
   become: True
   tasks:pyth
-    - name: Install python pip3
-      yum:
+    - name: Install python3-pip
+      apt:
         name: python-pip
         state: present
     - name: Install docker
-      yum:
+      apt:
         name: docker
         state: present
     - name: start docker
