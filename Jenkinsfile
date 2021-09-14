@@ -6,11 +6,13 @@ pipeline{
     environment {
       DOCKER_TAG = getVersion()
     }
-    stages{
-        stage('SCM'){
-            steps{
+
+    stages {
+        
+        stage ("SCM") {
+            steps {
                 git credentialsId: 'github', 
-                    url: 'https://github.com/javahometech/dockeransiblejenkins'
+                url: 'https://github.com/amashhour1974/dockeransiblejenkins'
             }
         }
         
@@ -22,25 +24,29 @@ pipeline{
         
         stage('Docker Build'){
             steps{
-                sh "docker build . -t kammana/hariapp:${DOCKER_TAG} "
+            
+                sh 'docker build . -t amashhour/hariapp:${DOCKER_TAG} '
+             
             }
         }
         
-        stage('DockerHub Push'){
+         stage('Docker Push'){
             steps{
                 withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
-                    sh "docker login -u kammana -p ${dockerHubPwd}"
+                 sh 'docker login -u amashhour -p ${dockerHubPwd}'
                 }
                 
-                sh "docker push kammana/hariapp:${DOCKER_TAG} "
+                sh 'docker push amashhour/hariapp:${DOCKER_TAG} '
             }
         }
         
         stage('Docker Deploy'){
             steps{
-              ansiblePlaybook credentialsId: 'dev-server', disableHostKeyChecking: true, extras: "-e DOCKER_TAG=${DOCKER_TAG}", installation: 'ansible', inventory: 'dev.inv', playbook: 'deploy-docker.yml'
+           ansiblePlaybook credentialsId: 'ansible-dev3', disableHostKeyChecking: true, extras: '-e DOCKER_TAG=${DOCKER_TAG}', installation: 'ansible', inventory: 'dev.inv', playbook: 'deploy-docker.yml'        
+                
             }
         }
+      
     }
 }
 
